@@ -1,0 +1,31 @@
+[build-system]
+requires = [
+  "setuptools>=68",
+  "wheel",
+  "cmake>=3.21",  # ✅ 提升至 3.21 以支持 HIP
+  "ninja",
+  "packaging",
+  # ✅ 明确指定 Torch 版本（避免兼容性问题）
+  "torch>=2.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fasteq"
+version = "0.1.0"
+description = "FastEq HIP extensions for AMD ROCm GPUs"  # ✅ 更新描述
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.0",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fasteq*"]
+
+# ✅ 可选：排除不需要的文件
+[tool.setuptools.exclude-package-data]
+"*" = ["*.cu", "*.cpp", "*.hpp"]  # 安装时排除源码
